@@ -1,10 +1,10 @@
 package com.example.sticher.controllers;
 
-import android.content.ActivityNotFoundException;
-import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.hardware.Camera;
 import android.os.Bundle;
-import android.provider.MediaStore;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.FrameLayout;
@@ -12,20 +12,40 @@ import android.widget.FrameLayout;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.sticher.R;
-import com.example.sticher.models.CameraPreview;
+import com.example.sticher.models.*;
+
+import java.util.ArrayList;
 
 
 public class CameraActivity extends AppCompatActivity {
     static final int REQUEST_IMAGE_CAPTURE = 1;
+    private static final String TAG = "CAMERA_ACTI";
+    private int numberofImage = 2;
+    private ArrayList<byte[]> arrayOfImage = new ArrayList<byte[]>();
+    private Camera camera;
+    private Camera.PictureCallback mPicture = new Camera.PictureCallback() {
+
+        @Override
+        public void onPictureTaken(byte[] data, Camera camera) {
+            arrayOfImage.add(data);
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_camera);
-        Camera camera = getCameraInstance();
+        camera = getCameraInstance();
         CameraPreview cameraPreview = new CameraPreview(this, camera);
-        FrameLayout preview = (FrameLayout) findViewById(R.id.camera_preview);
+        final FrameLayout preview = (FrameLayout) findViewById(R.id.camera_preview);
         Button btnCapture = (Button) findViewById(R.id.capture);
+        btnCapture.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                camera.takePicture(null,null, mPicture);
+
+            }
+        });
         preview.addView(cameraPreview);
     }
 
@@ -40,14 +60,5 @@ public class CameraActivity extends AppCompatActivity {
         return c; // returns null if camera is unavailable
     }
 
-
-    private void dispatchTakePictureIntent() {
-        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        try {
-            startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
-        } catch (ActivityNotFoundException e) {
-            // display error state to the user
-        }
-    }
 }
 
