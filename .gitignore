@@ -13,3 +13,4 @@ AndroidApp/build
 AndroidApp/captures
 AndroidApp/.externalNativeBuild
 AndroidApp.cxx
+AndroidApp/java/build
