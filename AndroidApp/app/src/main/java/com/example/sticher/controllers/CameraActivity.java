@@ -1,11 +1,8 @@
 package com.example.sticher.controllers;
 
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.hardware.Camera;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.FrameLayout;
@@ -23,15 +20,21 @@ public class CameraActivity extends AppCompatActivity {
     static final int REQUEST_IMAGE_CAPTURE = 1;
     private static final String TAG = "CAMERA_ACTI";
     private int numberofImage = 2;
-    private ArrayList<byte[]> arrayOfImage = new ArrayList<byte[]>();
+    private ArrayList<byte[]> arrayOfDataImage = new ArrayList<byte[]>();
     private Camera camera;
     TextView photoTake;
     private Camera.PictureCallback mPicture = new Camera.PictureCallback() {
 
         @Override
         public void onPictureTaken(byte[] data, Camera camera) {
-            arrayOfImage.add(data);
+            arrayOfDataImage.add(data);
             camera.startPreview();
+            if(numberofImage == 0) {
+                Intent stitcherResultActivity = new Intent(CameraActivity.this,SticherResult.class);
+                stitcherResultActivity.putExtra("img1", arrayOfDataImage.get(0));
+                stitcherResultActivity.putExtra("img2", arrayOfDataImage.get(1));
+                startActivity(stitcherResultActivity);
+            }
         }
     };
 
@@ -44,19 +47,15 @@ public class CameraActivity extends AppCompatActivity {
         final FrameLayout preview = (FrameLayout) findViewById(R.id.camera_preview);
         photoTake = (TextView) findViewById(R.id.take);
         Button btnCapture = (Button) findViewById(R.id.capture);
+        preview.addView(cameraPreview);
         btnCapture.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 numberofImage--;
-                if(numberofImage == 0) {
-                    Intent sitcherResultActivity = new Intent(CameraActivity.this,SticherResult.class);
-                    startActivity(sitcherResultActivity);
-                }
                 photoTake.setText("Take " + numberofImage +" more photo");
                 camera.takePicture(null,null, mPicture);
             }
         });
-        preview.addView(cameraPreview);
     }
 
     public Camera getCameraInstance(){
