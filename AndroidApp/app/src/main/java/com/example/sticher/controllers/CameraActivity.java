@@ -17,8 +17,6 @@ import java.util.ArrayList;
 
 
 public class CameraActivity extends AppCompatActivity {
-    static final int REQUEST_IMAGE_CAPTURE = 1;
-    private static final String TAG = "CAMERA_ACTI";
     private int numberofImage = 2;
     private ArrayList<byte[]> arrayOfDataImage = new ArrayList<byte[]>();
     private Camera camera;
@@ -29,6 +27,8 @@ public class CameraActivity extends AppCompatActivity {
         public void onPictureTaken(byte[] data, Camera camera) {
             arrayOfDataImage.add(data);
             camera.startPreview();
+            numberofImage--;
+            photoTake.setText("Take " + numberofImage +" more photo");
             if(numberofImage == 0) {
                 Intent stitcherResultActivity = new Intent(CameraActivity.this,SticherResult.class);
                 stitcherResultActivity.putExtra("img1", arrayOfDataImage.get(0));
@@ -51,8 +51,6 @@ public class CameraActivity extends AppCompatActivity {
         btnCapture.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                numberofImage--;
-                photoTake.setText("Take " + numberofImage +" more photo");
                 camera.takePicture(null,null, mPicture);
             }
         });

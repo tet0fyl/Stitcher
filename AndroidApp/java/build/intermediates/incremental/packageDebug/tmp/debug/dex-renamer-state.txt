@@ -1,4 +1,0 @@
-#Sat Oct 31 18:56:35 CET 2020
-base.0=/Users/t-braye/Documents/UHA40/KarimHammoudi/Stitcher/AndroidApp/java/build/intermediates/dex/debug/mergeDexDebug/classes.dex
-path.0=classes.dex
-renamed.0=classes.dex
