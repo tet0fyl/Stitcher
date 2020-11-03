@@ -1,37 +1,48 @@
 package com.example.sticher.models;
 
-import android.util.Log;
+import android.graphics.Bitmap;
 
+import org.bytedeco.javacpp.BytePointer;
 import org.bytedeco.javacpp.opencv_core.Mat;
 import org.bytedeco.javacpp.opencv_core.MatVector;
 import org.bytedeco.javacpp.opencv_stitching.Stitcher;
+import org.bytedeco.javacv.AndroidFrameConverter;
+import org.bytedeco.javacv.OpenCVFrameConverter;
 
-import static org.bytedeco.javacpp.opencv_stitching.createStitcher;
+import static org.bytedeco.javacpp.opencv_imgcodecs.IMREAD_COLOR;
+import static org.bytedeco.javacpp.opencv_imgcodecs.imdecode;
 
 
 public class Stitching {
-    static MatVector imgs = new MatVector();
-    private Mat pano;
+    AndroidFrameConverter converterToBitmap = new AndroidFrameConverter();
+    OpenCVFrameConverter.ToMat converterToMat = new OpenCVFrameConverter.ToMat();
+    static MatVector imgs;
+    private Mat pano, img1, img2;
     Stitcher stitcher;
 
     public Stitching(byte[] img1, byte[] img2) {
+        stitcher = Stitcher.create(Stitcher.PANORAMA);
+        this.img1 = imdecode(new Mat(new BytePointer(img1), false),IMREAD_COLOR);
+        this.img2 = imdecode(new Mat(new BytePointer(img2), false),IMREAD_COLOR);
         pano = new Mat();
-        imgs.push_back(new Mat(img1));
-        imgs.push_back(new Mat(img2));
+        Mat[] arrayOfMatImg = {
+                this.img1, this.img2
+        };
+        imgs = new MatVector(arrayOfMatImg);
     }
 
-    public byte[] process() {
-        stitcher = Stitcher.create(Stitcher.PANORAMA);
-        int status = stitcher.stitch(imgs, pano);
-        if (status != Stitcher.OK) {
+    public Bitmap process() {
+        try {
+            int status = 0;
+            status = stitcher.stitch(imgs, pano);
+            if (status != Stitcher.OK) {
+                return null;
+            }
+            return converterToBitmap.convert(converterToMat.convert(pano));
+            //return converterToBitmap.convert(converterToMat.convert(img1));
+        } catch (RuntimeException e) {
+            e.printStackTrace();
             return null;
         }
-        return Mat2Bytes(pano);
-    }
-
-    public static byte[] Mat2Bytes(Mat mat){
-        byte[] b = new byte[mat.channels() * mat.cols() * mat.rows()];
-        mat.data().get(b);
-        return b;
     }
 }
