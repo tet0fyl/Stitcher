@@ -1,6 +1,8 @@
 <resources>
     <string name="app_name">Sticher</string>
     <string name="title_activity_camera">CameraActivity</string>
+    <string name="ready_to_stich">Ready to Stitch !</string>
+    <string name="take_photo">Take</string>
     <!-- Strings used for fragments for navigation -->
 
 </resources>
