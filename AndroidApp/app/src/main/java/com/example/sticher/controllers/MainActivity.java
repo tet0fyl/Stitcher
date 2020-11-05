@@ -17,7 +17,6 @@ public class MainActivity extends AppCompatActivity {
 
     private boolean allowSitching = false;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

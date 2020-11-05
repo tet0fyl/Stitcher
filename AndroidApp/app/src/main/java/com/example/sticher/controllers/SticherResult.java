@@ -18,7 +18,6 @@ import com.example.sticher.models.Stitching;
 
 
 public class SticherResult extends AppCompatActivity {
-    byte[] result;
     Bitmap bmpResult;
     ImageView imageView;
     Stitching stitching;
@@ -26,15 +25,12 @@ public class SticherResult extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sticher_result);
-        Intent intent = getIntent();
         imageView = findViewById(R.id.imageView);
         stitching = new Stitching(Globals.arrayOfDataImage.get(0),Globals.arrayOfDataImage.get(1));
         imageView.post(new Runnable() {
             @Override
             public void run() {
                 bmpResult = stitching.process();
-                //result= Globals.arrayOfDataImage.get(1);
-                //bmpResult = BitmapFactory.decodeByteArray(result, 0, result.length);
                 if(bmpResult != null){
                     imageView.setImageBitmap(Bitmap.createScaledBitmap(bmpResult, bmpResult.getWidth(), bmpResult.getHeight(), false));
                 } else {

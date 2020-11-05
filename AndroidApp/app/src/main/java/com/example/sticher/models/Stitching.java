@@ -21,7 +21,7 @@ public class Stitching {
     Stitcher stitcher;
 
     public Stitching(byte[] img1, byte[] img2) {
-        stitcher = Stitcher.create(Stitcher.PANORAMA);
+        stitcher = Stitcher.create(Stitcher.SCANS);
         this.img1 = imdecode(new Mat(new BytePointer(img1), false),IMREAD_COLOR);
         this.img2 = imdecode(new Mat(new BytePointer(img2), false),IMREAD_COLOR);
         pano = new Mat();
