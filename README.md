@@ -4,11 +4,13 @@
 
 *Desktop App in C++ and mobile App in Android*
 
-*library : OpenCv*
+*library : OpenCv (Computer Vision Open Source Library)*
 
 # Desktop App
 
-I use the OpenCv Sticher High Level API
+The program uses the OpenCv Sticher High Level API
+
+## Compile & Execute
 
 ```
 cd  DesktopApp
@@ -24,7 +26,7 @@ cd out/
 
 # Mobile App
 
-I use [byte deco](http://bytedeco.org/) a JavaCPP Wrapper for OpenCv
+The program uses [byte deco](http://bytedeco.org/) a JavaCPP OpenCv Wrapper.
 
 ## Explanation
 The App is compose of three view:
