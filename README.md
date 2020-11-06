@@ -18,7 +18,7 @@ cd out/
 >> generate result.jpg
 ```
 ## Results
-| Image1 | Images2 | Result |
+| Image1 | Image2 | Result |
 |:------:|:-------:|:------:|
 |![img1](DesktopApp/images/part/part1.jpg)|![img2](DesktopApp/images/part/part2.jpg)|![result](documentation/result.jpg)
 
