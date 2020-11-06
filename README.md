@@ -8,7 +8,7 @@
 
 # Desktop App
 
-I use the Sticher High Level API
+I use the OpenCv Sticher High Level API
 
 ```
 cd  DesktopApp
@@ -24,7 +24,7 @@ cd out/
 
 # Mobile App
 
-I use [byte deco](http://bytedeco.org/) a JavaCPP Wrapper for OpenvCv
+I use [byte deco](http://bytedeco.org/) a JavaCPP Wrapper for OpenCv
 
 ## Explanation
 The App is compose of three view:
