@@ -29,7 +29,7 @@ cd out/
 The program uses [byte deco](http://bytedeco.org/) a JavaCPP OpenCv Wrapper.
 
 ## Explanation
-The App is compose of three view:
+The App is compose of three views:
 
 - **The First view:** The "READY TO STITCH !" button request Camera permission and takes you to the next viewcd And .
 - **The Second view:** Preview the phone camera and allow you to take 2 photos. These photos aren't save on mobile local stogare but are stored in **RAM memory** in an **array of byte**.
